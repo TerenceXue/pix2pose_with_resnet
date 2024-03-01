@@ -32,7 +32,7 @@ class DataLoader:
         return data
 
 
-directory = r"/data15/xuetc2401/domrand/CNN/data_bag/test_push"
+directory = r"/data15/xuetc2401/pix2pose_with_resnet/data"
 data_loader = DataLoader(directory)
 loaded_data = data_loader.load_data()
 all_depth_array=[]#所有文件的深度图像，一张一张的
@@ -179,7 +179,8 @@ model.summary()
 optimizer = optimizers.Adam(lr=1e-3)
 all_acc=[]
 max_acc=[]
-for epoch in range(10):
+num_epoch=50
+for epoch in range(num_epoch):
 
     for step, (x, y) in enumerate(train_db):
 
@@ -215,9 +216,9 @@ for epoch in range(10):
         print('epoch:', epoch, 'acc:', mean_acc)
         all_acc.append(mean_acc)
         if mean_acc==max(all_acc):
-            model.save_weights(f'/data15/xuetc2401/domrand/CNN/saved_weights/weights_{mean_acc}.ckpt')
+            model.save_weights(f'/data15/xuetc2401/pix2pose_with_resnet/saved_weights/weights_{mean_acc}.ckpt')
             print('saved')
             max_acc.append(mean_acc)
             break
-plt.plot(range(10),max_acc)
-plt.show()
+plt.plot(range(num_epoch),max_acc)
+plt.savefig('/data15/xuetc2401/pix2pose_with_resnet/saved_fig/1.png')
